@@ -6,28 +6,30 @@ from pydantic import BaseModel
 
 router = APIRouter(prefix="/contas_a_pagar_e_receber")
 
-class cprResponse(BaseModel):
+
+class CprResponse(BaseModel):
     id: int
     desc: str
     valor: Decimal
-    tipo: str # pagar // receber
+    tipo: str  # pagar // receber
 
-class cprRequest(BaseModel):
+
+class CprRequest(BaseModel):
     desc: str
     valor: Decimal
-    tipo: str # pagar // receber
+    tipo: str  # pagar // receber
 
 
-@router.get("/", response_model=List[cprResponse])
+@router.get("/", response_model=List[CprResponse])
 def listar_contas():
     return [
-        cprResponse(
+        CprResponse(
             id=1,
             desc='ALuguel',
             valor=350,
             tipo='pagar',
         ),
-        cprResponse(
+        CprResponse(
             id=2,
             desc='Salário',
             valor=5000,
@@ -35,11 +37,12 @@ def listar_contas():
         ),
     ]
 
-@router.post("/", response_model=cprResponse, status_code=201)
-def criar_conta(conta: cprRequest):
-    return cprResponse(
-            id=3,
-            desc=conta.desc,
-            valor=conta.valor,
-            tipo=conta.tipo,
-        )
+
+@router.post("", response_model=CprResponse, status_code=201)
+def criar_conta(conta: CprRequest):
+    return CprResponse(
+        id=3,
+        desc=conta.desc,
+        valor=conta.valor,
+        tipo=conta.tipo,
+    )
